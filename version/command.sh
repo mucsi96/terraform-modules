@@ -5,7 +5,7 @@
 
 read -d EOF
 tag_prefix=$(echo "$REPLY" | jq -r .tag_prefix)
-ignore=$(echo "$REPLY" | jq -r .ignore[] | sed "s/^/:(exclude)/" | tr '\n' ' ')
+ignore=$(echo "$REPLY" | jq -r .ignore | tr ',' '\n' | sed "s/^/:(exclude)/" | tr '\n' ' ')
 
 if [[ -z "$tag_prefix" ]]
 then
