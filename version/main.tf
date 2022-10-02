@@ -3,5 +3,6 @@ data "external" "version" {
   working_dir = var.path
   query = {
     tag_prefix = var.tag_prefix
+    ignore     = var.ignore
   }
 }

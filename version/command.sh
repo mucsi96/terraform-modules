@@ -5,6 +5,7 @@
 
 read -d EOF
 tag_prefix=$(echo "$REPLY" | jq -r .tag_prefix)
+ignore=$(echo "$REPLY" | jq -r .ignore[] | sed "s/^/:(exclude)/" | tr '\n' ' ')
 
 if [[ -z "$tag_prefix" ]]
 then
@@ -15,7 +16,7 @@ fi
 prev_tag=$(git describe --tags --match=$tag_prefix-* --abbrev=0)
 if [ $? -eq 0 ]
 then
-    git diff --quiet HEAD $prev_tag -- .
+    git diff --quiet HEAD $prev_tag -- . $ignore
     if [ $? -eq 0 ]
     then
         version=$(echo "$prev_tag" | sed "s/^$tag_prefix-//")
