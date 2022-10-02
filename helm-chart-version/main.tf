@@ -2,6 +2,7 @@ module "chart_version" {
   source     = "../version"
   tag_prefix = var.tag_prefix
   path       = var.path
+  ignore     = var.ignore
 }
 
 data "external" "version" {
