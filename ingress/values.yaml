@@ -1,0 +1,3 @@
+rateLimit:
+  average: 10
+  burst: 20

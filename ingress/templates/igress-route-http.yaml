@@ -1,0 +1,20 @@
+{{- $fullName := include "ingress.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-http
+  labels:
+    {{- include "ingress.labels" . | nindent 4 }}
+spec:
+  entryPoints: 
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`{{ required "Missing hostName value" .Values.hostName }}`)
+    middlewares:
+    {{- include "ingress.commonMiddlewares" . | nindent 4 }}
+    - name: {{ $fullName }}-http-to-https
+    services:
+    - kind: Service
+      name: {{ required "Missing serverHost value" .Values.serverHost }}
+      port: http

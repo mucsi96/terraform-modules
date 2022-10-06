@@ -1,0 +1,11 @@
+{{- $fullName := include "ingress.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $fullName }}-http-to-https
+  labels:
+    {{- include "ingress.labels" . | nindent 4 }}
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

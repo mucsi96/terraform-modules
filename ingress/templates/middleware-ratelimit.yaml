@@ -1,0 +1,11 @@
+{{- $fullName := include "ingress.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $fullName }}-ratelimit
+  labels:
+    {{- include "ingress.labels" . | nindent 4 }}
+spec:
+  rateLimit:
+    average: {{ .Values.rateLimit.average }}
+    burst: {{ .Values.rateLimit.burst }}
